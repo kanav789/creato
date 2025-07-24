@@ -65,7 +65,7 @@ export default function Intro() {
                 {/* what i am doing */}
 
                 <div>
-                    <h2 className="mt-10 text-[17px] font-medium sm:font-[22px]">What I am doing</h2>
+                    <h2 className="mt-10 text-[17px] font-medium sm:text-[22px]">What I am doing</h2>
                     <ul className="flex flex-col pl-5 gap-1 mt-4 ">
                         {whatamdoing.map((item, index) => (
                             <li key={index} className="text-gray-400 text-[14px] list-disc sm:text-[16px]">
