@@ -4,7 +4,8 @@ export default function Experience() {
             date: "August 2024 - current",
             title: "Frontend Developer Intern | Fascave",
             description:
-                "Developed a company website using Astro, enhancing the firm's online presence and providing a modern, responsive design.",
+                `Working as a Frontend Developer, where I am gaining hands-on experience with industry standard code architecture and efficient API handling.
+                Developed the company website using react and framer-motion, focusing on performance and user experience.`,
         },
 
     ];
@@ -22,7 +23,7 @@ export default function Experience() {
                             <div className="ml-4">
                                 <p className="text-sm text-gray-400 capitalize font-medium">{exp.date}</p>
                                 <h3 className="text-white font-semibold">{exp.title}</h3>
-                                <p className="text-gray-400  sm:w-[650px] text-[14px] sm:text-[16px] flex flex-wrap">{exp.description}</p>
+                                <p className="text-gray-400 w-70 sm:w-[600px] text-[14px] sm:text-[16px] flex flex-wrap">{exp.description}</p>
                             </div>
                         </div>
                     ))}

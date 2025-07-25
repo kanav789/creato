@@ -12,10 +12,9 @@ export default function Intro() {
     const introdata = [
         {
             name: "Kanav Rana",
-            bio: "I build modern, performance-driven web experiences. Currently focused on React, Astro, GenAI, and crafting minimalist interfaces that scale.",
-            contactMe: "mailto:dummy@example.com",
-            resume: "https://example.com/resume.pdf",
-            blogs: "https://example.com/blogs"
+            bio: " Frontend Developer who know backend as well.I love to code and create new things. I am passionate about learning new technologies and improving my skills.",
+            contactMe: "mailto:kanavrana91@gmail.com",
+            resume: "https://drive.google.com/file/d/1QY2oIlANW0h4c6tLlOP6r3kmZbr_ehij/view?usp=sharing",
         }
     ]
 
@@ -27,10 +26,10 @@ export default function Intro() {
             list: "Enhancing my expertise towards backend."
         },
         {
-            list: "I am working as Frontend Intern in startup."
+            list: "Currently learning dsa and exploring new technologies."
         }
     ]
-    console.log(introdata?.[0]?.name);
+
     return (
         <section className="mt-10">
             <div className="flex flex-col pl-14 sm:pl-[40vh] sm:mt-20">
@@ -54,10 +53,7 @@ export default function Intro() {
                     {introdata?.[0]?.resume && <a className="hover:underline hover:tracking-wider" href={introdata?.[0]?.resume}>
                         Resume
                     </a>}
-                    {introdata?.[0]?.resume && <a className="hover:underline hover:tracking-wider" href={introdata?.[0]?.resume}>
-                        Blog
-                    </a>}
-                    {introdata?.[0]?.resume && <a className="hover:underline hover:tracking-wider" href={introdata?.[0]?.resume}>
+                    {introdata?.[0]?.resume && <a className="hover:underline hover:tracking-wider" href={introdata?.[0]?.contactMe}>
                         ContactMe
                     </a>}
                 </div>

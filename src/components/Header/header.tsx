@@ -1,3 +1,5 @@
+import { FaGithub } from "react-icons/fa";
+
 export default function Header() {
 
 
@@ -12,7 +14,8 @@ export default function Header() {
                 {/* Light */}
 
                 <div>
-                    <span className="text-gray-500 font-medium hover:underline cursor-pointer ">Light</span>
+                    <a className="text-gray-500 text-2xl font-medium hover:underline cursor-pointer " href="https://github.com/kanav789"><FaGithub />
+                    </a>
                 </div>
 
 

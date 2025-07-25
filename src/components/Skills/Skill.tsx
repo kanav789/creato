@@ -4,6 +4,8 @@ export default function Skill() {
         { name: "Javascript" },
         { name: "Typescript" },
         { name: "React" },
+        { name: "Redux" },
+
         { name: "Next.js" },
         { name: "Tailwind CSS" },
         { name: "Node.js" },
@@ -14,6 +16,9 @@ export default function Skill() {
         { name: "REST APIs" },
         { name: "HTML5" },
         { name: "CSS3" },
+        { name: "PostMan" },
+        { name: "Vercel" },
+        { name: " Netlify" }
     ]
     return (
         <section className="pl-14 sm:pl-[40vh] mt-10">

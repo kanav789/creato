@@ -1,11 +1,17 @@
 export default function Projects() {
     const projects = [
         {
-            name: "Project One",
-            description: "cli-pix is a powerful CLI tool to convert images across formats with support for Windows, Linux, and Mac. It features parallel processing, output folder management, original file deletion, and flexible format selection, enabling streamlined automation with easy CLI flags.",
-            link: "https://example.com/project-one",
-            live: "https://example.com/live-project-one"
+            name: "Finance Tracker",
+            description: "Built a finance tracker application for the tracking of personal expenses.Integrated a graphs for visualising the transactions easily.Trying to implementing a socket.io for the responses. ",
+            link: "https://github.com/kanav789/personalFinance",
+            live: "https://personal-finance-eight-nu.vercel.app/"
         },
+        {
+            name: "Rwear",
+            description: "Responsive design for mobile and desktop using Tailwind CSS. Implemented a product page with a cart system and integrated Razorpay for payment processing.",
+            link: "https://github.com/kanav789/Rwear",
+            live: "https://rwear.vercel.app/"
+        }
 
     ]
     return (
