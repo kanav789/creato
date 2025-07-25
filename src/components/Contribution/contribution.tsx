@@ -40,10 +40,10 @@ export default function Contribution() {
 
 
 
-            <div className="border border-gray-800 rounded-md px-2 sm:w-[670px] pb-4 w-96 mt-6 " >
+            <div className="border border-gray-800 rounded-md px-2 sm:w-[670px] pb-4 w-auto mt-6 " >
 
 
-                <div className="bg-[#111827] rounded-md p-3 sm:inline-block w-90 overflow-x-scroll shadow-m sm:w-[650px]">
+                <div className="bg-[#111827] rounded-md p-3 sm:inline-block w-auto overflow-x-scroll shadow-m sm:w-[650px]">
                     <div className="flex gap-[3px]">
                         {weeks.map((week, weekIndex) => (
                             <div key={weekIndex} className="flex flex-col gap-[1px]">
