@@ -1,3 +1,4 @@
+import Contribution from "./components/Contribution/contribution";
 import Experience from "./components/Experience/Experience";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/header";
@@ -7,9 +8,10 @@ import Skill from "./components/Skills/Skill";
 
 export default function App() {
     return (
-        <div className="w-full">
+        <div className="w-full px-3">
             <Header />
             <Intro />
+            <Contribution />
             <Skill />
             <Experience />
             <Projects />
