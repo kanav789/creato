@@ -20,10 +20,10 @@ export default function Experience() {
                             <div className="absolute -left-[31px] sm:w-4 sm:h-4 sm:-left-[32px] top-1 w-3 h-3 bg-[#374053] rounded-full  transition-transform"></div>
 
                             {/* Content */}
-                            <div className="ml-4">
+                            <div className="ml-4 flex flex-col flex-wrap">
                                 <p className="text-sm text-gray-400 capitalize font-medium">{exp.date}</p>
                                 <h3 className="text-white font-semibold">{exp.title}</h3>
-                                <p className="text-gray-400 w-70 sm:w-[600px] text-[14px] sm:text-[16px] flex flex-wrap">{exp.description}</p>
+                                <p className="text-gray-400  sm:w-[600px] text-[14px] sm:text-[16px] flex flex-wrap">{exp.description}</p>
                             </div>
                         </div>
                     ))}

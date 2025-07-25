@@ -20,7 +20,7 @@ export default function Projects() {
 
             <div>
                 {projects?.map((project: any, index: any) => (
-                    <div key={index} className="flex flex-col w-90 sm:w-[650px] mt-2 ">
+                    <div key={index} className="flex flex-col  sm:w-[650px] mt-2 flex-wrap ">
                         <h3 className="text-[15px] font-medium  sm:text-[17px] ">{project.name}</h3>
                         <p className="text-gray-400 text-[14px] sm:text-[16px] mt-1">{project.description}</p>
                         <div className="flex gap-2 mt-1">

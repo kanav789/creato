@@ -32,13 +32,13 @@ export default function Intro() {
 
     return (
         <section className="mt-10">
-            <div className="flex flex-col pl-14 sm:pl-[40vh] sm:mt-20">
+            <div className="flex flex-col pl-14 sm:pl-[40vh] sm:mt-20 flex-wrap">
                 <h1 className="text-2xl font-medium sm:text-[44px]">Hi, I'm {introdata?.[0]?.name}.</h1>
                 <p className="
                 mt-5
                     text-[14px]
                     text-gray-400
-                    w-90
+                  
                     font-normal
                     leading-6
                     sm:text-[16px]
@@ -50,10 +50,10 @@ export default function Intro() {
 
                 {/* button */}
                 <div className="flex flex-col gap-1 sm:flex-row mt-4 text-gray-200 text-[15px] sm:gap-4">
-                    {introdata?.[0]?.resume && <a className="hover:underline hover:tracking-wider" href={introdata?.[0]?.resume}>
+                    {introdata?.[0]?.resume && <a className="hover:underline transition-discrete duration-900 hover:tracking-wider" href={introdata?.[0]?.resume}>
                         Resume
                     </a>}
-                    {introdata?.[0]?.resume && <a className="hover:underline hover:tracking-wider" href={introdata?.[0]?.contactMe}>
+                    {introdata?.[0]?.resume && <a className="hover:underline transition-discrete duration-900 hover:tracking-wider" href={introdata?.[0]?.contactMe}>
                         ContactMe
                     </a>}
                 </div>
