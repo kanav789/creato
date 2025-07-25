@@ -7,7 +7,7 @@ export default function Header() {
             <div className="flex justify-between px-3  sm:px-7 py-4">
                 {/* creato */}
                 <div className="">
-                    <h3 className="text-gray-500 font-bold text-lg">Creato</h3>
+                    <h3 className="text-gray-500 font-bold text-lg">Kanav Rana</h3>
                 </div>
                 {/* Light */}
 

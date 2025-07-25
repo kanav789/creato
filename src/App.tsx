@@ -1,4 +1,5 @@
 import Experience from "./components/Experience/Experience";
+import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/header";
 import Intro from "./components/Intro";
 import Projects from "./components/Projects/Projects";
@@ -12,6 +13,7 @@ export default function App() {
             <Skill />
             <Experience />
             <Projects />
+            <Footer />
 
         </div>
     )
