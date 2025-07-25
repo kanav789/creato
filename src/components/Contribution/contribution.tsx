@@ -60,7 +60,7 @@ export default function Contribution() {
 
                 {/* Optional: Gray Legend */}
                 <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-1 mt-3 text-xs text-gray-500">
+                    <div className="flex items-center gap-1 mt-3 text-[10px] sm:text-[16px]  text-gray-500">
                         <span>Less</span>
                         <div className="w-3 h-3 bg-gray-800" />
                         <div className="w-3 h-3 bg-green-900" />
@@ -71,7 +71,7 @@ export default function Contribution() {
                     </div>
 
 
-                    <p className="text-gray-500 text-sm sm:text-base  mt-3">
+                    <p className="text-gray-500 text-[10px] sm:text-[16px]   mt-3">
                         Total Contributions:{" "}
                         <span className="text-gray-500 font-semibold">{totalContributions}</span>
                     </p>
