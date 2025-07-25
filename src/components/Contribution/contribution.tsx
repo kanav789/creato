@@ -50,7 +50,7 @@ export default function Contribution() {
                                 {week.map((count, dayIndex) => (
                                     <div
                                         key={dayIndex}
-                                        className={`w-3 h-3 sm:w-4 sm:h-4  border border-green-900 ${getColor(count)} rounded-sm transition-all duration-300`}
+                                        className={`w-3 h-3 sm:w-4 sm:h-4  border border-black ${getColor(count)} rounded-sm transition-all duration-300`}
                                     />
                                 ))}
                             </div>
