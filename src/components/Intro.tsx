@@ -34,7 +34,7 @@ export default function Intro() {
     return (
         <section className="mt-10">
             <div className="flex flex-col pl-14 sm:pl-[40vh] sm:mt-20">
-                <h1 className="text-2xl font-bold sm:text-[44px]">Hi, I'm {introdata?.[0]?.name}.</h1>
+                <h1 className="text-2xl font-medium sm:text-[44px]">Hi, I'm {introdata?.[0]?.name}.</h1>
                 <p className="
                 mt-5
                     text-[14px]

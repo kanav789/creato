@@ -4,7 +4,7 @@ export default function Header() {
     return (
         <header>
 
-            <div className="flex justify-between px-3 sm:px-7">
+            <div className="flex justify-between px-3  sm:px-7 py-4">
                 {/* creato */}
                 <div className="">
                     <h3 className="text-gray-500 font-bold text-lg">Creato</h3>
