@@ -14,7 +14,7 @@ export default function Login() {
     } = useForm<FieldType>();
 
     const onSubmit = (data: FieldType) => {
-        console.log("Submitted:", data);
+
     };
 
     return (
