@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../config/ConfigFirebase"
 interface SignupFormData {
     username: string;
     email: string;
@@ -17,7 +19,22 @@ export default function Signup() {
     } = useForm<SignupFormData>();
 
     const onSubmit = (data: SignupFormData) => {
-        console.log("Signup data:", data);
+
+
+        createUserWithEmailAndPassword(auth, data.email, data.password).then((usercred): any => {
+            const user = usercred.user;
+            console.log("User signed up:", user);
+            // You can redirect or perform other actions after successful signup
+        }).catch((error) => {
+            console.error("Error signing up:", error);
+
+        })
+
+
+
+
+
+
     };
 
     const password = watch("password");
@@ -29,18 +46,7 @@ export default function Signup() {
 
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     {/* Username */}
-                    <div className="mb-4">
-                        <label className="text-gray-500 text-[19px] block mb-1">Username</label>
-                        <input
-                            type="text"
-                            placeholder="Enter your username"
-                            {...register("username", { required: "Username is required" })}
-                            className="custom-input w-full"
-                        />
-                        {errors.username && (
-                            <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>
-                        )}
-                    </div>
+
 
                     {/* Email */}
                     <div className="mb-4">
@@ -82,23 +88,7 @@ export default function Signup() {
                         )}
                     </div>
 
-                    {/* Confirm Password */}
-                    <div className="mb-6">
-                        <label className="text-gray-500 text-[19px] block mb-1">Confirm Password</label>
-                        <input
-                            type="password"
-                            placeholder="Re-enter your password"
-                            {...register("confirmPassword", {
-                                required: "Please confirm your password",
-                                validate: (value) =>
-                                    value === password || "Passwords do not match",
-                            })}
-                            className="custom-input w-full"
-                        />
-                        {errors.confirmPassword && (
-                            <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>
-                        )}
-                    </div>
+
 
                     {/* Submit Button */}
                     <button

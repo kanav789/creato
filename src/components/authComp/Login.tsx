@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-
+import { signInWithEmailAndPassword } from "firebase/auth";
 interface FieldType {
-    username: string;
+    email: string;
     password: string;
 }
-
+import { auth } from "../../config/ConfigFirebase";
 export default function Login() {
     const {
         register,
@@ -14,7 +14,15 @@ export default function Login() {
     } = useForm<FieldType>();
 
     const onSubmit = (data: FieldType) => {
+        signInWithEmailAndPassword(auth, data.email, data.password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log("User logged in:", user);
 
+            })
+            .catch((error) => {
+                console.error("Error logging in:", error);
+            });
     };
 
     return (
@@ -23,20 +31,25 @@ export default function Login() {
                 <h2 className="text-center text-gray-400 mb-6 text-2xl">Login</h2>
 
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                    {/* Username Field */}
+                    {/* Email */}
                     <div className="mb-4">
-                        <label className="text-gray-500 text-[19px] block mb-1">Username</label>
+                        <label className="text-gray-500 text-[19px] block mb-1">Email</label>
                         <input
-                            type="text"
-                            placeholder="Enter your username"
-                            {...register("username", { required: "Username is required" })}
+                            type="email"
+                            placeholder="Enter your email"
+                            {...register("email", {
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^\S+@\S+$/i,
+                                    message: "Invalid email address",
+                                },
+                            })}
                             className="custom-input w-full"
                         />
-                        {errors.username && (
-                            <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>
+                        {errors.email && (
+                            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
                         )}
                     </div>
-
                     {/* Password Field */}
                     <div className="mb-6">
                         <label className="text-gray-500 text-[19px] block mb-1">Password</label>
