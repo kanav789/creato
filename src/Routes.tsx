@@ -1,8 +1,9 @@
 // src/Routes.tsx
 import { createBrowserRouter } from "react-router-dom";
 import Login from "./components/authComp/Login.tsx";
-import Profile from "./Profile.tsx";
+import Profile from "./Pages/Profile.tsx";
 import Signup from "./components/authComp/Signup.tsx";
+import CreateProfile from "./Pages/createProfile.tsx";
 const router = createBrowserRouter([
   {
     path: "/login",
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />
+  },
+  {
+    path: "/createProfile",
+    element: <CreateProfile />
   }
 ]);
 
