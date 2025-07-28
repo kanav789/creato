@@ -1,29 +1,58 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../config/ConfigFirebase";
+
 interface FieldType {
     email: string;
     password: string;
 }
-import { auth } from "../../config/ConfigFirebase";
+
 export default function Login() {
     const {
         register,
         handleSubmit,
         formState: { errors },
+        reset, // add reset method
     } = useForm<FieldType>();
 
+    // State to hold Firebase auth errors
+    const [firebaseError, setFirebaseError] = useState<string | null>(null);
+    const [Loader, setLoader] = useState<boolean>(false);
     const onSubmit = (data: FieldType) => {
+
+
+        try {
+            setFirebaseError(null);
+
         signInWithEmailAndPassword(auth, data.email, data.password)
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log("User logged in:", user);
 
+
+                reset();
             })
             .catch((error) => {
-                console.error("Error logging in:", error);
+
+                console.log(error);
+
+                setFirebaseError("Invalid email or password");
+
+
+
+                reset();
             });
+        } catch (error) {
+            console.error("Error during login:", error);
+            setFirebaseError("An unexpected error occurred");
+            reset(); // Reset form even on unexpected errors
+        }
+
     };
+
+
 
     return (
         <div className="flex flex-col justify-center items-center min-h-screen bg-[#0f172a]">
@@ -50,6 +79,7 @@ export default function Login() {
                             <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
                         )}
                     </div>
+
                     {/* Password Field */}
                     <div className="mb-6">
                         <label className="text-gray-500 text-[19px] block mb-1">Password</label>
@@ -64,17 +94,24 @@ export default function Login() {
                         )}
                     </div>
 
+                    {/* Firebase auth error message */}
+                    {firebaseError && (
+                        <p className="text-red-500 text-center mb-4">{firebaseError}</p>
+                    )}
+
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className=" py-2 px-4 bg-[#111827] text-white font-medium text-sm rounded-md border border-gray-600 shadow-sm hover:border-blue-500 hover:bg-[#1f2937] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="py-2 px-4 bg-[#111827] text-white font-medium text-sm rounded-md border border-gray-600 shadow-sm hover:border-blue-500 hover:bg-[#1f2937] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                         Login
                     </button>
 
                     <div className="text-center text-gray-400 mt-4">
-                        Already have an account?{" "}
-                        <Link to="/signup" className="text-blue-500 hover:underline">Sign Up</Link>
+                        Don't have an account?{" "}
+                        <Link to="/signup" className="text-blue-500 hover:underline">
+                            Sign Up
+                        </Link>
                     </div>
                 </form>
             </div>
