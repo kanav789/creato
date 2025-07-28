@@ -12,9 +12,9 @@ export const GenerateToken = (useremail) => {
   }
 };
 
-export const VerifyToken = (token) => {
+export const VerifyToken = (email) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(email, process.env.JWT_SECRET);
     return decoded;
   } catch (error) {
     console.error("Error verifying token:", error);
