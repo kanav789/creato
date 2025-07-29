@@ -15,6 +15,9 @@ export const GenerateToken = (useremail) => {
 export const VerifyToken = (email) => {
   try {
     const decoded = jwt.verify(email, process.env.JWT_SECRET);
+    if (!decoded) {
+      throw new Error("Invalid token");
+    }
     return decoded;
   } catch (error) {
     console.error("Error verifying token:", error);

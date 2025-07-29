@@ -21,7 +21,6 @@ const Middleware = async (req, res, next) => {
     }
     const user = await UserModel.findOne({ email });
 
-    console.log("Token received:", user);
     if (!user) {
       return res.status(403).json({ message: "Invalid token" });
     }

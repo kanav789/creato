@@ -8,7 +8,8 @@ import cors from "cors";
 const app = express();
 app.use(cors());
 // connect mongoDB
-app.use(express.json()); // Middleware to parse JSON bodies
+app.use(express.json());
+
 connectDb();
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -16,8 +17,10 @@ app.get("/", (req, res) => {
 
 // import routes
 import authRoutes from "./routes/AuthRoutes.js";
+import profileRoutes from "./routes/ProfileRoutes.js";
 
 app.use("/api/auth", authRoutes);
+app.use("/api/profile", profileRoutes);
 
 const PORT = process.env.PORT || 4000;
 
