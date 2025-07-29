@@ -34,13 +34,13 @@ export const CreateProfile = async (req, res) => {
 
     await newProfile.save();
 
-    res.status(201).json({
+    return res.status(201).json({
       message: "Profile created successfully",
       newProfile,
     });
   } catch (error) {
     console.error("Error creating profile:", error);
-    res.status(500).json({ message: "Internal server error", error });
+    return res.status(500).json({ message: "Internal server error", error });
   }
 };
 
@@ -76,47 +76,75 @@ export const ProfileUpdate = async (req, res) => {
       return res.status(404).json({ message: "Profile not found" });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Profile updated successfully",
       profile,
     });
   } catch (error) {
     console.error("Error updating profile:", error);
-    res.status(500).json({ message: "Internal server error", error });
+    return res.status(500).json({ message: "Internal server error", error });
   }
 };
 // create The whole profile controller
 
-export const DeleteProfile =async(req,res)=>{
-try {
-  const user =req.user;
-  const body = req.body;
-  const {id} = body;
-  if(!id){
-    return res.status(400).json({message:"Profile ID is required"});
+export const DeleteProfile = async (req, res) => {
+  try {
+    const user = req.user;
+    const body = req.body;
+    const { id } = body;
+    if (!id) {
+      return res.status(400).json({ message: "Profile ID is required" });
+    }
+    if (!user || !user._id) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized: No user found in request" });
+    }
+    const profile = await UserProfile.findOneAndDelete({
+      _id: id,
+      userId: user._id,
+    });
+    if (!profile) {
+      return res.status(404).json({ message: "Profile not found" });
+    }
+
+    return res.status(200).json({
+      message: "Profile deleted successfully",
+    });
+  } catch (error) {
+    console.error("Error deleting profile:", error);
+    return res.status(500).json({ message: "Internal server error", error });
   }
-  if(!user || !user._id){
-    return res.status(401).json({message:"Unauthorized: No user found in request"});
+};
+
+//  get  file without any middleware
+
+export const getProfile = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ message: "Profile ID is required" });
+    }
+    const profile = await UserProfile.findById(id);
+    if (!profile) {
+      return res.status(404).json({ message: "Profile not found" });
+    }
+    return res.status(200).json({
+      message: "Profile fetched successfully",
+      profile,
+    });
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    return res.status(500).json({ message: "Internal server error", error });
   }
-  const profile =await UserProfile.findOneAndDelete({_id:id,userId:user._id});
-  if(!profile){
-    return res.status(404).json({message:"Profile not found"});
-  }
-
-  res.status(200).json({
-    message:"Profile deleted successfully",
-  });
+};
 
 
 
 
-} catch (error) {
-  
-}
- 
 
 
-}
 
 
 
