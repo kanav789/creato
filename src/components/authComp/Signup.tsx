@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import addData from "../../utility/CustomFetchData/CustomFetchData";
+import { ClipLoader } from "react-spinners";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../config/ConfigFirebase";
 
 interface SignupFormData {
+    name: string;
     email: string;
     password: string;
     confirmPassword: string;
@@ -20,23 +21,38 @@ export default function Signup() {
         formState: { errors },
     } = useForm<SignupFormData>();
 
-    const [firebaseError, setFirebaseError] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     const passwordValue = watch("password");
+    const [loader, setLoader] = useState<boolean>(false);
+    const navigate = useNavigate()
+    const onSubmit = async (data: SignupFormData) => {
+        setError("");
+        setLoader(true);
+        try {
+            const body = {
+                name: data.name,
+                email: data.email,
+                password: data.password,
+            };
 
-    const onSubmit = (data: SignupFormData) => {
-        setFirebaseError(null); // Clear previous error before submit
-
-        createUserWithEmailAndPassword(auth, data.email, data.password)
-            .then((usercred) => {
-                const user = usercred.user;
-                console.log("User signed up:", user);
-                reset(); // Reset form on success
-            })
-            .catch((error) => {
-                setFirebaseError(error.message || "Error signing up");
-                reset(); // Reset form on failure as well
+            const response = await addData({
+                apiurl: `${import.meta.env.VITE_API_URL}api/auth/register`,
+                body,
             });
+
+            if (response) {
+
+                localStorage.setItem("token", response.token)
+                navigate("/")
+            }
+            reset()
+
+        } catch (error) {
+            setError("An error occurred during signup");
+        } finally {
+            setLoader(false)
+        }
     };
 
     return (
@@ -45,6 +61,21 @@ export default function Signup() {
                 <h2 className="text-center text-gray-400 mb-6 text-2xl">Sign Up</h2>
 
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                    <div className="mb-4">
+                        <label className="text-gray-500 text-[19px] block mb-1">Name</label>
+                        <input
+                            type="text"
+                            placeholder="Enter your name"
+                            {...register("name", {
+                                required: "Name is required",
+                            })}
+                            className="custom-input w-full"
+                        />
+                        {errors.name && (
+                            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+                        )}
+                    </div>
+
                     {/* Email */}
                     <div className="mb-4">
                         <label className="text-gray-500 text-[19px] block mb-1">Email</label>
@@ -108,16 +139,17 @@ export default function Signup() {
                     </div>
 
                     {/* Firebase signup error */}
-                    {firebaseError && (
-                        <p className="text-red-500 text-center mb-4">{firebaseError}</p>
+                    {error && (
+                        <p className="text-red-500 text-center mb-4">{error}</p>
                     )}
 
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className="py-2 px-4 bg-[#111827] text-white font-medium text-sm rounded-md border border-gray-600 shadow-sm hover:border-blue-500 hover:bg-[#1f2937] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="py-2 px-4 bg-[#111827] text-white font-medium text-sm rounded-md border border-gray-600 shadow-sm hover:border-blue-500 hover:bg-[#1f2937] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center gap-1"
+                        disabled={loader}
                     >
-                        Sign Up
+                        {loader && <ClipLoader size={20} color="gray" />}   Sign Up
                     </button>
 
                     <div className="text-center text-gray-400 mt-4">

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../config/ConfigFirebase";
+
 
 interface FieldType {
     email: string;
@@ -17,38 +16,11 @@ export default function Login() {
         reset, // add reset method
     } = useForm<FieldType>();
 
-    // State to hold Firebase auth errors
-    const [firebaseError, setFirebaseError] = useState<string | null>(null);
-    const [Loader, setLoader] = useState<boolean>(false);
+    const [error, setError] = useState("")
     const onSubmit = (data: FieldType) => {
 
 
-        try {
-            setFirebaseError(null);
 
-        signInWithEmailAndPassword(auth, data.email, data.password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                console.log("User logged in:", user);
-
-
-                reset();
-            })
-            .catch((error) => {
-
-                console.log(error);
-
-                setFirebaseError("Invalid email or password");
-
-
-
-                reset();
-            });
-        } catch (error) {
-            console.error("Error during login:", error);
-            setFirebaseError("An unexpected error occurred");
-            reset(); // Reset form even on unexpected errors
-        }
 
     };
 
@@ -95,8 +67,8 @@ export default function Login() {
                     </div>
 
                     {/* Firebase auth error message */}
-                    {firebaseError && (
-                        <p className="text-red-500 text-center mb-4">{firebaseError}</p>
+                    {error && (
+                        <p className="text-red-500 text-center mb-4">{error}</p>
                     )}
 
                     {/* Submit Button */}
