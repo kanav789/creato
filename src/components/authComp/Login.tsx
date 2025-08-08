@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import addData from "../../utility/CustomFetchData/CustomFetchData";
+import { ClipLoader } from "react-spinners";
 
 
 interface FieldType {
@@ -17,12 +19,42 @@ export default function Login() {
     } = useForm<FieldType>();
 
     const [error, setError] = useState("")
-    const onSubmit = (data: FieldType) => {
+    const [loader, setLoader] = useState<boolean>(false)
+    const navigate = useNavigate()
+    const onSubmit = async (data: FieldType) => {
+        setError("");
+        setLoader(true);
+        try {
+            const body = {
 
+                email: data.email,
+                password: data.password,
+            };
 
+            const response = await addData({
+                apiurl: `${import.meta.env.VITE_API_URL}api/auth/login`,
+                body,
+            });
 
+            if (response) {
 
+                localStorage.setItem("token", response.token)
+                navigate("/")
+            }
+            reset()
+
+        } catch (error) {
+            setError("An error occurred during signup");
+        } finally {
+            setLoader(false)
+        }
     };
+
+
+
+
+
+
 
 
 
@@ -75,8 +107,9 @@ export default function Login() {
                     <button
                         type="submit"
                         className="py-2 px-4 bg-[#111827] text-white font-medium text-sm rounded-md border border-gray-600 shadow-sm hover:border-blue-500 hover:bg-[#1f2937] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        disabled={loader}
                     >
-                        Login
+                        {loader && <ClipLoader size={20} color="gray" />}   Login
                     </button>
 
                     <div className="text-center text-gray-400 mt-4">

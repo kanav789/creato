@@ -9,6 +9,7 @@ export default async function addData({ apiurl, body }: AddDataProps) {
     try {
         const response = await axios.post(apiurl, body);
         toast.success(response?.data?.message || "Data added successfully");
+        console.log("Response:", response?.data?.message);
         return response.data;
     } catch (error) {
         console.error("Error adding data:", error);
