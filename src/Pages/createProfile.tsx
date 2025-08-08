@@ -1,10 +1,13 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { MdOutlineDelete } from "react-icons/md";
+import { getData, PostData } from "../utility/CustomFetchData/CustomFetchData";
+import { useEffect, useState } from "react";
+import { ClipLoader } from "react-spinners";
 
 export default function CreateProfile() {
     const { register, control, handleSubmit } = useForm({
         defaultValues: {
-            name: "",
+            username: "",
             bio: "",
             links: {
                 resume: "",
@@ -13,9 +16,9 @@ export default function CreateProfile() {
                 linkedin: "",
                 leetcode: "",
                 x: "",
-                github: "", // GitHub added here
+                github: "",
             },
-            skills: [{ value: "" }], // skills as array of objects
+            skills: [{ value: "" }], // array of objects so inputs work
             experience: [],
             projects: [],
         },
@@ -39,8 +42,34 @@ export default function CreateProfile() {
         remove: removeProj,
     } = useFieldArray({ control, name: "projects" });
 
-    const onSubmit = (data) => {
-        console.log(data);
+    useEffect(() => {
+        const fetchdata = async () => {
+
+            const response = await getData({ apiurl: `${import.meta.env.VITE_API_URL}api/profile` });
+            console.log("Fetched Profile Data:", response);
+        };
+        // fetchdata();
+    }, []);
+
+    const [buttonloader, setbuttonLoader] = useState(false)
+    const onSubmit = async (data: any) => {
+
+        setbuttonLoader(true);
+        const transformedData = {
+            ...data,
+            skills: data.skills.map((s: any) => s.value),
+        };
+
+        console.log("Sending Data:", transformedData);
+
+        const response = await PostData({
+            apiurl: `${import.meta.env.VITE_API_URL}api/profile/create`,
+            body: transformedData,
+        });
+
+        console.log("Response:", response);
+
+        setbuttonLoader(false);
     };
 
     return (
@@ -55,7 +84,7 @@ export default function CreateProfile() {
             {/* Name & Bio */}
             <div className="bg-gray-800 p-6 rounded-lg shadow space-y-4">
                 <input
-                    {...register("name")}
+                    {...register("username")}
                     placeholder="Full Name"
                     className="custom-input w-full"
                     required
@@ -89,7 +118,6 @@ export default function CreateProfile() {
                             {...register(`links.${link}`)}
                             placeholder={link.charAt(0).toUpperCase() + link.slice(1)}
                             className="custom-input"
-                        // optional by default, no required attribute
                         />
                     ))}
                 </div>
@@ -126,7 +154,7 @@ export default function CreateProfile() {
                 </button>
             </div>
 
-            {/* Work Experience */}
+            {/* Experience */}
             <div className="bg-gray-800 p-6 rounded-lg shadow">
                 <h3 className="font-semibold text-lg mb-2 text-gray-500">Experience</h3>
                 {expFields.map((field, index) => (
@@ -251,14 +279,12 @@ export default function CreateProfile() {
             <div className="flex justify-end">
                 <button
                     type="submit"
-                    className="py-2 px-4 bg-[#111827] text-white font-medium text-sm rounded-md border border-gray-600 shadow-sm hover:border-blue-500 hover:bg-[#1f2937] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="py-2 px-4 bg-[#111827] text-white font-medium text-sm rounded-md border border-gray-600 shadow-sm hover:border-blue-500 hover:bg-[#1f2937] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center gap-1"
+                    disabled={buttonloader}
                 >
-                    Submit Profile
+                    {buttonloader && <ClipLoader />}  Submit Profile
                 </button>
             </div>
-
-            {/* Tailwind custom input styles */}
-
         </form>
     );
 }

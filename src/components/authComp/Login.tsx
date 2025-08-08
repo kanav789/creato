@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import addData from "../../utility/CustomFetchData/CustomFetchData";
+import { addData } from "../../utility/CustomFetchData/CustomFetchData";
 import { ClipLoader } from "react-spinners";
 
 
