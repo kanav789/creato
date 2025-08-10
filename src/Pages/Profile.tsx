@@ -49,16 +49,16 @@ export default function Profile() {
 
 
             {Loader ? (
-                <p className="flex justify-center items-center"><ClipLoader /></p>
+                <p className="flex justify-center items-center"><ClipLoader size={20} color="gray" /></p>
             ) :
                 (<div>
                     {data?.github?.username && data?.username && <Header />}
-                    {<Intro />}
+                    {data?.username && <Intro />}
                     {data?.github?.showContribution === true && data?.github?.username && <Contribution />}
                     {(data?.skills?.length ?? 0) > 0 && <Skill />}
                     {(data?.experiences?.length ?? 0) > 0 && <Experience />}
                     {(data?.projects?.length ?? 0) > 0 && <Projects />}
-            <Footer />
+                    {data?.username && <Footer />}
                 </div>)
             }
 
