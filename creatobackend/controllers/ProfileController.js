@@ -7,6 +7,7 @@ export const CreateProfile = async (req, res) => {
       github,
       bio,
       importantLinks,
+      whatiamdoing,
       skills,
       experiences,
       projects,
@@ -31,6 +32,7 @@ export const CreateProfile = async (req, res) => {
       existingProfile.bio = bio;
       existingProfile.github = github;
       existingProfile.importantLinks = importantLinks;
+      existingProfile.whatiamdoing = whatiamdoing;
       existingProfile.skills = skills;
       existingProfile.experiences = experiences;
       existingProfile.projects = projects;
@@ -48,6 +50,7 @@ export const CreateProfile = async (req, res) => {
       bio,
       github,
       importantLinks,
+      whatiamdoing,
       skills,
       experiences,
       projects,

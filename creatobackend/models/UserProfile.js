@@ -22,11 +22,14 @@ const ProfileSchema = new mongoose.Schema({
   },
   whatiamdoing: {
     type: [String],
-  },
-  importantLinks: {
-    type: [String],
     default: [],
   },
+  importantLinks: [
+    {
+      name: { type: String, required: true },
+      url: { type: String, required: true },
+    },
+  ],
   skills: {
     type: [String],
     default: [],

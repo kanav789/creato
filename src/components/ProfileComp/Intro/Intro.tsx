@@ -1,14 +1,10 @@
-// interface IntroProps {
-//     name: string;
-//     bio: string;
-//     contactMe?: string;
-//     resume?: string;
-//     blogs?: string;
-// }
-
+import { useDataContext } from "../../../Context/DataContext"
 
 
 export default function Intro() {
+
+    const { data } = useDataContext();
+
     const introdata = [
         {
             name: "Kanav Rana",
@@ -33,7 +29,7 @@ export default function Intro() {
     return (
         <section className="mt-10">
             <div className="flex flex-col pl-14 sm:pl-[40vh] sm:mt-20 flex-wrap">
-                <h1 className="text-2xl font-medium sm:text-[44px]">Hi, I'm {introdata?.[0]?.name}.</h1>
+                <h1 className="text-2xl font-medium sm:text-[44px]">Hi, I'm {data?.username ? data?.username : "dummy_name"}</h1>
                 <p className="
                 mt-5
                     text-[14px]
@@ -45,31 +41,29 @@ export default function Intro() {
                     sm:w-[650px]
 
                 ">
-                    {introdata?.[0]?.bio}
+                    {data?.bio ? data?.bio : "Software"}
                 </p>
 
                 {/* button */}
-                <div className="flex flex-col gap-1 sm:flex-row mt-4 text-gray-200 text-[15px] sm:gap-4">
-                    {introdata?.[0]?.resume && <a className="hover:underline transition-discrete duration-900 hover:tracking-wider" href={introdata?.[0]?.resume}>
-                        Resume
-                    </a>}
-                    {introdata?.[0]?.resume && <a className="hover:underline transition-discrete duration-900 hover:tracking-wider" href={introdata?.[0]?.contactMe}>
-                        ContactMe
-                    </a>}
-                </div>
+                {(data?.importantLinks?.length ?? 0) > 0 && <div className="flex flex-col gap-1 sm:flex-row mt-4 text-gray-200 text-[15px] sm:gap-4">
+                    {data?.importantLinks?.map((items, index) => <a className="hover:underline transition-discrete duration-900 hover:tracking-wider" href={items.url} key={index}>
+                        {items.name}
+                    </a>)}
+
+                </div>}
 
                 {/* what i am doing */}
 
-                <div>
+                {data?.whatiamdoing && <div>
                     <h2 className="mt-10 text-[17px] font-medium sm:text-[22px]">What I am doing</h2>
                     <ul className="flex flex-col pl-5 gap-1 mt-4 ">
-                        {whatamdoing.map((item, index) => (
+                        {data?.whatiamdoing.map((item, index) => (
                             <li key={index} className="text-gray-400 text-[14px] list-disc sm:text-[16px]">
-                                {item.list}
+                                {item}
                             </li>
                         ))}
                     </ul>
-                </div>
+                </div>}
 
 
 
