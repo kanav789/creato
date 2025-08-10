@@ -1,7 +1,10 @@
 import { FaGithub } from "react-icons/fa";
+import { useDataContext } from "../../../Context/DataContext";
 
 export default function Header() {
+    const { data } = useDataContext()
 
+    console.log("data, header", data)
 
     return (
         <header>

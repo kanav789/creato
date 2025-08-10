@@ -58,8 +58,8 @@ export default function EditableJson() {
                     apiurl: `${import.meta.env.VITE_API_URL}api/profile/getprofile`,
                 }
             )
-            console.log(response, "data")
-            setData(response.profile)
+            console.log(response.userprofile, "data")
+            setData(response?.userprofile || initialData);
         } catch (error) {
             console.error("Error fetching profile:", error);
         }
