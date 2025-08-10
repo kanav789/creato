@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDataContext } from "../../../Context/DataContext";
 
 const getColor = (count: number) => {
     if (count === 0) return "bg-gray-800";
@@ -12,12 +13,14 @@ const getColor = (count: number) => {
 
 
 export default function Contribution() {
+    const { data } = useDataContext()
     const [contributions, setContributions] = useState<number[]>([]);
     const [totalContributions, setTotalContributions] = useState(0);
 
-    useEffect(() => {
+    {
+        useEffect(() => {
         axios
-            .get("https://github-contributions-api.jogruber.de/v4/kanav789?y=last")
+            .get(`https://github-contributions-api.jogruber.de/v4/${data?.github?.username}?y=last`)
             .then((res) => {
                 const counts =
                     res.data?.contributions?.map((entry: any) =>
@@ -28,7 +31,7 @@ export default function Contribution() {
             })
             .catch(console.error);
     }, []);
-
+    }
     const weeks: number[][] = [];
     for (let i = 0; i < contributions.length; i += 7) {
         weeks.push(contributions.slice(i, i + 7));

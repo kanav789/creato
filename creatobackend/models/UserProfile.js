@@ -17,7 +17,7 @@ const ProfileSchema = new mongoose.Schema({
     },
     showContribution: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
   whatiamdoing: {

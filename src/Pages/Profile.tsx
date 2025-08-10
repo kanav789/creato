@@ -14,7 +14,7 @@ export default function Profile() {
     const { id } = useParams()
     const [Loader, setLoader] = useState(false)
 
-    const { setData } = useDataContext()
+    const { data, setData } = useDataContext()
     const fetchdata = async () => {
         try {
             setLoader
@@ -54,7 +54,7 @@ export default function Profile() {
                 (<div>
             <Header />
             <Intro />
-            <Contribution />
+                    {data?.github?.showContribution === true && data?.github?.username && < Contribution />}
             <Skill />
             <Experience />
             <Projects />

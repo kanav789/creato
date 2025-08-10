@@ -29,7 +29,7 @@ export default function Intro() {
     return (
         <section className="mt-10">
             <div className="flex flex-col pl-14 sm:pl-[40vh] sm:mt-20 flex-wrap">
-                <h1 className="text-2xl font-medium sm:text-[44px]">Hi, I'm {data?.username ? data?.username : "dummy_name"}</h1>
+                <h1 className="text-2xl font-medium sm:text-[44px] capitalize">Hi, I'm {data?.username ? data?.username : "dummy_name"}</h1>
                 <p className="
                 mt-5
                     text-[14px]
