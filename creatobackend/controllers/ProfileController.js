@@ -2,8 +2,15 @@ import UserProfile from "../models/UserProfile.js";
 
 export const CreateProfile = async (req, res) => {
   try {
-    const { username, bio, importantLinks, skills, experiences, projects } =
-      req.body;
+    const {
+      username,
+      github,
+      bio,
+      importantLinks,
+      skills,
+      experiences,
+      projects,
+    } = req.body;
     const user = req.user;
 
     if (!user || !user._id) {
@@ -22,6 +29,7 @@ export const CreateProfile = async (req, res) => {
       // update the profile
       existingProfile.username = username;
       existingProfile.bio = bio;
+      existingProfile.github = github;
       existingProfile.importantLinks = importantLinks;
       existingProfile.skills = skills;
       existingProfile.experiences = experiences;
@@ -38,6 +46,7 @@ export const CreateProfile = async (req, res) => {
       userId: user._id,
       username,
       bio,
+      github,
       importantLinks,
       skills,
       experiences,
@@ -146,6 +155,7 @@ export const getProfileByUserId = async (req, res) => {
     const userprofile = {
       username: profile.username,
       bio: profile.bio,
+      github: profile.github,
       importantLinks: profile.importantLinks,
       skills: profile.skills,
       experiences: profile.experiences,

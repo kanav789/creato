@@ -11,6 +11,18 @@ const ProfileSchema = new mongoose.Schema({
   bio: {
     type: String,
   },
+  github: {
+    username: {
+      type: String,
+    },
+    showContribution: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  whatiamdoing: {
+    type: [String],
+  },
   importantLinks: {
     type: [String],
     default: [],
