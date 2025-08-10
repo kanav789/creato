@@ -22,7 +22,7 @@ export default function Profile() {
                 apiurl: `${import.meta.env.VITE_API_URL}api/profile/get/${id}`,
             })
             if (response) {
-                console.log(response.profile)
+
                 setData(response.profile)
             }
             setLoader(false)
@@ -52,12 +52,12 @@ export default function Profile() {
                 <p className="flex justify-center items-center"><ClipLoader /></p>
             ) :
                 (<div>
-            <Header />
-            <Intro />
-                    {data?.github?.showContribution === true && data?.github?.username && < Contribution />}
-            <Skill />
-            <Experience />
-            <Projects />
+                    {data?.github?.username && data?.username && <Header />}
+                    {<Intro />}
+                    {data?.github?.showContribution === true && data?.github?.username && <Contribution />}
+                    {(data?.skills?.length ?? 0) > 0 && <Skill />}
+                    {(data?.experiences?.length ?? 0) > 0 && <Experience />}
+                    {(data?.projects?.length ?? 0) > 0 && <Projects />}
             <Footer />
                 </div>)
             }
