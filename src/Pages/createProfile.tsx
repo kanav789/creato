@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import { PostData } from "../utility/CustomFetchData/CustomFetchData";
+import React, { useState, useRef, useEffect } from "react";
+import { getData, PostData } from "../utility/CustomFetchData/CustomFetchData";
 
 const initialData = {
     username: "khiladi_coder",
@@ -7,7 +7,7 @@ const initialData = {
     importantLinks: [
         "https://github.com/khiladi_coder",
         "https://linkedin.com/in/khiladi_coder"
-    ],
+    ],  
     skills: ["JavaScript", "React", "Node.js", "MongoDB"],
     experiences: [
         {
@@ -46,7 +46,25 @@ export default function EditableJson() {
     const [data, setData] = useState(initialData);
     const [isEditing, setIsEditing] = useState(false);
     const editableRef = useRef(null);
+    useEffect(() => {
+        fetchProfile();
+    }, []);
 
+
+    const fetchProfile = async () => {
+        try {
+            const response = await getData(
+                {
+                    apiurl: `${import.meta.env.VITE_API_URL}api/profile/getprofile`,
+                }
+            )
+            console.log(response, "data")
+            setData(response.profile)
+        } catch (error) {
+            console.error("Error fetching profile:", error);
+        }
+    }
+    //  handle save
     const handleSave = async () => {
         try {
             const updatedJson = JSON.parse(editableRef.current.innerText);
@@ -79,9 +97,9 @@ export default function EditableJson() {
             </pre>
 
             {!isEditing ? (
-                <button onClick={() => setIsEditing(true)}>Edit</button>
+                <button onClick={() => setIsEditing(true)} className="text-gray-400 border hover:bg-gray-600 cursor-default p-2 text-[12px] rounded-sm transition-colors duration-700 sm:text-[14px] sm:py-2 sm:px-4">Edit</button>
             ) : (
-                <button onClick={handleSave}>Save</button>
+                    <button onClick={handleSave} className="text-gray-400 border hover:bg-gray-600 cursor-default p-2 text-[12px] rounded-sm transition-colors duration-700 sm:text-[14px] sm:py-2 sm:px-4">Save</button>
             )}
         </div>
     );

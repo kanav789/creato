@@ -19,7 +19,19 @@ export const CreateProfile = async (req, res) => {
     // Optional: Prevent duplicate profiles
     const existingProfile = await UserProfile.findOne({ userId: user._id });
     if (existingProfile) {
-      return res.status(400).json({ message: "Profile already exists" });
+      // update the profile
+      existingProfile.username = username;
+      existingProfile.bio = bio;
+      existingProfile.importantLinks = importantLinks;
+      existingProfile.skills = skills;
+      existingProfile.experiences = experiences;
+      existingProfile.projects = projects;
+
+      await existingProfile.save();
+      return res.status(200).json({
+        message: "Profile updated successfully",
+        profile: existingProfile,
+      });
     }
 
     const newProfile = new UserProfile({
@@ -116,6 +128,32 @@ export const DeleteProfile = async (req, res) => {
     return res.status(500).json({ message: "Internal server error", error });
   }
 };
+
+// getprofile with userId
+
+export const getProfileByUserId = async (req, res) => {
+  try {
+    const user = req.user;
+    const userId = user._id;
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const profile = await UserProfile.findOne({ userId });
+    if (!profile) {
+      return res.status(404).json({ message: "Profile not found" });
+    }
+
+    return res.status(200).json({
+      message: "Profile fetched successfully",
+      profile,
+    });
+  } catch (error) {
+    console.log(error, "error Fetching Profile", error);
+    return res.status(500).json({ message: "Internal server error", error });
+  }
+};
+
 
 //  get  file without any middleware
 
