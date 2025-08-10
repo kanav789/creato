@@ -9,8 +9,8 @@ interface Experience {
     // Replace these with the actual fields from your backend
     role: string;
     company: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: string;
+    endDate: string;
     description: string;
     // add more as needed
 }

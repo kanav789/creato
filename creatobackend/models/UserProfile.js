@@ -37,8 +37,8 @@ const ProfileSchema = new mongoose.Schema({
   experiences: {
     type: [
       {
-        startDate: Date,
-        endDate: Date,
+        startDate: String,
+        endDate: String,
         role: String,
         company: String,
         description: String,
