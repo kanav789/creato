@@ -5,6 +5,8 @@ import Profile from "./Pages/Profile.tsx";
 import Signup from "./components/authComp/Signup.tsx";
 
 import EditableJson from "./Pages/createProfile.tsx";
+import { Protector } from "./Protector.tsx";
+import Home from "./Pages/Home.tsx";
 const router = createBrowserRouter([
   {
     path: "/login",
@@ -16,12 +18,16 @@ const router = createBrowserRouter([
     element: <Signup />
   },
   {
+    path: "/",
+    element: < Home />
+  },
+  {
     path: "/profile/:id",
     element: <Profile />
   },
   {
     path: "/profileSetting",
-    element: <EditableJson />
+    element: <Protector><EditableJson /></Protector>
   }
 ]);
 
