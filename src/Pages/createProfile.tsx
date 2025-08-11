@@ -45,7 +45,6 @@ const initialData = {
 export default function EditableJson() {
     const [data, setData] = useState(initialData);
     const [isEditing, setIsEditing] = useState(false);
-    const editableRef = useRef(null);
     useEffect(() => {
         fetchProfile();
     }, []);
@@ -64,18 +63,26 @@ export default function EditableJson() {
             console.error("Error fetching profile:", error);
         }
     }
-    //  handle save
+    const editableRef = useRef<HTMLPreElement>(null);
+
     const handleSave = async () => {
         try {
-            const updatedJson = JSON.parse(editableRef.current.innerText);
+            if (editableRef.current) {
+                const updatedJson = JSON.parse(editableRef.current.innerText || "{}");
 
-            await PostData({ apiurl: `${import.meta.env.VITE_API_URL}api/profile/create`, body: updatedJson });
+                await PostData({
+                    apiurl: `${import.meta.env.VITE_API_URL}api/profile/create`,
+                    body: updatedJson
+                });
+
             setData(updatedJson);
             setIsEditing(false);
+            }
         } catch (error) {
             alert("Invalid JSON format. Please fix it before saving.");
         }
     };
+
 
     return (
         <div style={{ fontFamily: "monospace", padding: "20px" }}>

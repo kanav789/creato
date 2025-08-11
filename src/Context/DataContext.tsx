@@ -31,7 +31,7 @@ interface UserData {
     bio: string;
     github: GithubInfo;
     experiences: Experience[];
-    importantLinks: string[];
+    importantLinks: any[];
     projects: Project[];
     skills: string[];
     whatiamdoing: string[];

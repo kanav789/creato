@@ -4,28 +4,6 @@ import { useDataContext } from "../../../Context/DataContext"
 export default function Intro() {
 
     const { data } = useDataContext();
-
-    const introdata = [
-        {
-            name: "Kanav Rana",
-            bio: " Frontend Developer who know backend as well.I love to code and create new things. I am passionate about learning new technologies and improving my skills.",
-            contactMe: "mailto:kanavrana91@gmail.com",
-            resume: "https://drive.google.com/file/d/1QY2oIlANW0h4c6tLlOP6r3kmZbr_ehij/view?usp=sharing",
-        }
-    ]
-
-    const whatamdoing = [
-        {
-            list: "I am working as Frontend Intern in startup."
-        },
-        {
-            list: "Enhancing my expertise towards backend."
-        },
-        {
-            list: "Currently learning dsa and exploring new technologies."
-        }
-    ]
-
     return (
         <section className="mt-10">
             <div className="flex flex-col pl-14 sm:pl-[40vh] sm:mt-20 flex-wrap">
