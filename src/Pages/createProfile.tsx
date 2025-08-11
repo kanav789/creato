@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { getData, PostData } from "../utility/CustomFetchData/CustomFetchData";
 
 const initialData = {
