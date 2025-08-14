@@ -3,13 +3,25 @@ import { getData, PostData } from "../utility/CustomFetchData/CustomFetchData";
 import { ClipLoader } from "react-spinners";
 
 const initialData = {
+    _id: "",
     username: "khiladi_coder",
     bio: "Full stack developer passionate about building scalable web apps.",
     importantLinks: [
-        "https://github.com/khiladi_coder",
-        "https://linkedin.com/in/khiladi_coder"
-    ],  
+    {
+     name: "Resume",
+     url:"https://drive.google.com/file/d/1ZmQd6qbV6l9JvrK212s4YLCxponictKy/view?usp=drive_link"
+    },{
+     name:"Linkedin",
+     url:"https://linkedin.com/in/khiladi_coder"
+    }
+  
+  ],
     skills: ["JavaScript", "React", "Node.js", "MongoDB"],
+    whatiamdoing:[
+        "I am working as Frontend Intern in startup.",
+        "Enhancing my expertise towards backend",
+        "Currently learning dsa and exploring new technologies."
+      ],
     experiences: [
         {
             startDate: "2023-01-01",
@@ -61,9 +73,9 @@ export default function EditableJson() {
                     apiurl: `${import.meta.env.VITE_API_URL}api/profile/getprofile`,
                 }
             )
-            console.log(response.userprofile, "data")
+            console.log(response.profile, "data")
             console.log(response,"response")
-            setData(response?.userprofile || initialData);
+            setData(response?.profile || initialData);
         } catch (error) {
             console.error("Error fetching profile:", error);
         } finally {
@@ -85,11 +97,34 @@ export default function EditableJson() {
 
             setData(updatedJson);
             setIsEditing(false);
+            fetchProfile()
             }
         } catch (error) {
             alert("Invalid JSON format. Please fix it before saving.");
         } finally {
             setButtonLoader(false)
+        }
+    };
+    const [profiletext, setProfiletext] = useState<string>("Copy ID")
+    const [profilelinktext, setProfilelinktext] = useState<string>("Copy Link")
+    const copyProfileId = async () => {
+        try {
+            await navigator.clipboard.writeText(data._id);
+            setProfiletext("Copied")
+        } catch (error) {
+            console.error("Failed to copy profile ID:", error);
+            setProfiletext("Copy ID")
+        }
+    };
+
+    const copyProfileLink = async () => {
+        try {
+            const profileLink = `https://creato-iota.vercel.app/profile/${data._id}`;
+            await navigator.clipboard.writeText(profileLink);
+            setProfilelinktext("Copied")
+        } catch (error) {
+            console.error("Failed to copy profile link:", error);
+            setProfilelinktext("Copy Link")
         }
     };
 
@@ -115,6 +150,54 @@ export default function EditableJson() {
                         </p>
                     </div>
 
+                    {/* Profile Sharing Tab */}
+                    {data._id && (
+                        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-2xl mb-8">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+                                <h2 className="text-xl font-semibold text-white">Share Your Profile</h2>
+                            </div>
+                            <div className="bg-yellow-500/10 border border-yellow-400/30 rounded-lg p-4 mb-4">
+                                <p className="text-yellow-300 text-sm">
+                                    💡 <strong>Note:</strong> From here you can share your profile and add it to your social media profiles, resumes, and anywhere else you want to showcase your work!
+                                </p>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {/* Profile ID */}
+                                <div className="bg-gray-800/50 rounded-xl p-4 border border-white/10">
+                                    <h3 className="text-white font-semibold mb-2">Profile ID</h3>
+                                    <div className="flex items-center gap-2">
+                                        <code className="bg-gray-900/80 px-3 py-2 rounded-lg text-cyan-300 font-mono text-sm flex-1">
+                                            {data._id}
+                                        </code>
+                                        <button 
+                                            onClick={copyProfileId}
+                                            className="px-3 py-2 bg-cyan-600/30 border border-cyan-400/50 rounded-lg text-cyan-300 text-sm hover:bg-cyan-600/50 transition-colors"
+                                        >
+                                            {profiletext}
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                {/* Profile Link */}
+                                <div className="bg-gray-800/50 rounded-xl p-4 border border-white/10">
+                                    <h3 className="text-white font-semibold mb-2">Profile Link</h3>
+                                    <div className="flex items-center gap-2">
+                                        <code className="bg-gray-900/80 px-3 py-2 rounded-lg text-emerald-300 font-mono text-sm flex-1 break-all">
+                                            https://creato-iota.vercel.app/profile/{data._id}
+                                        </code>
+                                        <button 
+                                            onClick={copyProfileLink}
+                                            className="px-3 py-2 bg-emerald-600/30 border border-emerald-400/50 rounded-lg text-emerald-300 text-sm hover:bg-emerald-600/50 transition-colors"
+                                        >
+                                            {profilelinktext}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Profile Preview Cards */}
                     {!isEditing && (
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
@@ -124,6 +207,8 @@ export default function EditableJson() {
                                     <div className="w-3 h-3 bg-purple-400 rounded-full animate-pulse"></div>
                                     <h2 className="text-xl font-semibold text-white">Basic Information</h2>
                                 </div>
+
+                               
                                 <div className="space-y-3">
                                     <div>
                                         <label className="text-gray-400 text-sm">Username</label>
