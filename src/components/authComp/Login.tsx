@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { addData } from "../../utility/CustomFetchData/CustomFetchData";
 import { ClipLoader } from "react-spinners";
+import { useAuthContext } from "../../Context/AuthContext";
 
 
 interface FieldType {
@@ -17,7 +18,7 @@ export default function Login() {
         formState: { errors },
         reset, // add reset method
     } = useForm<FieldType>();
-
+ const {setUserToken} =useAuthContext()
     const [error, setError] = useState("")
     const [loader, setLoader] = useState<boolean>(false)
     const navigate = useNavigate()
@@ -39,6 +40,7 @@ export default function Login() {
             if (response) {
 
                 localStorage.setItem("token", response.token)
+                setUserToken(response.token)
                 navigate("/")
             }
             reset()

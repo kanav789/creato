@@ -7,6 +7,7 @@ import Signup from "./components/authComp/Signup.tsx";
 import EditableJson from "./Pages/createProfile.tsx";
 import { Protector } from "./Protector.tsx";
 import Home from "./Pages/Home.tsx";
+import Logout from "./components/authComp/Logout.tsx";
 const router = createBrowserRouter([
   {
     path: "/login",
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/profileSetting",
     element: <Protector><EditableJson /></Protector>
+  },
+  {
+    path: "/logout",
+    element: <Protector><Logout /></Protector>
   }
 ]);
 

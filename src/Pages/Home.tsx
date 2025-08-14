@@ -7,6 +7,7 @@ function Home() {
     const navigate = useNavigate()
     const { userToken } = useAuthContext()
     console.log("userToken", userToken)
+   
     return (
         <div className="min-h-screen bg-gray-900" style={{ backgroundColor: '#111827' }}>
             {/* Header */}
@@ -17,13 +18,26 @@ function Home() {
                         Creato
                     </div>
 
-                    {/* GitHub Icon */}
-                    <Link
+                  <div className="flex items-center gap-2">
+                      {/* GitHub Icon */}
+                      <Link
                         to={"https://github.com/kanav789/creato"}
                         className="p-2 text-gray-400 hover:text-white transition-colors duration-200"
                     >
                         <FaGithub className="w-6 h-6" />
                     </Link>
+
+                {userToken ? (<button  className="py-2 px-4 bg-[#111827] text-white font-medium text-sm rounded-md border border-gray-600 shadow-sm hover:border-blue-500 hover:bg-[#1f2937] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onClick={()=> navigate("/logout")}  >
+                  Logout
+                </button>) : <button
+                        type="submit"
+                        className="py-2 px-4 bg-[#111827] text-white font-medium text-sm rounded-md border border-gray-600 shadow-sm hover:border-blue-500 hover:bg-[#1f2937] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        onClick={() => navigate("/login")}
+                    >
+                        Login
+                    </button>}
+                  </div>
                 </div>
             </header>
 
@@ -50,9 +64,7 @@ function Home() {
                                 Get Started
                             </button>
 
-                            {userToken && <button className="w-full sm:w-auto bg-transparent border-2 border-gray-600 hover:border-gray-500 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300" onClick={() => navigate("/login")}>
-                                Login
-                            </button>}
+                         
                         </div>
                     </div>
 

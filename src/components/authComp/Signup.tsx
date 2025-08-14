@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { addData } from "../../utility/CustomFetchData/CustomFetchData";
 import { ClipLoader } from "react-spinners";
+import { useAuthContext } from "../../Context/AuthContext";
 
 
 interface SignupFormData {
@@ -20,7 +21,7 @@ export default function Signup() {
         reset,
         formState: { errors },
     } = useForm<SignupFormData>();
-
+    const {setUserToken} =useAuthContext()
     const [error, setError] = useState<string | null>(null);
 
     const passwordValue = watch("password");
@@ -44,6 +45,7 @@ export default function Signup() {
             if (response) {
 
                 localStorage.setItem("token", response.token)
+                setUserToken(response.token)
                 navigate("/")
             }
             reset()
