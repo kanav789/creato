@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { getData, PostData } from "../utility/CustomFetchData/CustomFetchData";
 import { ClipLoader } from "react-spinners";
+import { useAuthContext } from "../Context/AuthContext";
 
 const initialData = {
     _id: "",
@@ -60,8 +61,10 @@ export default function EditableJson() {
     const [isEditing, setIsEditing] = useState(false);
     const [Loader,setLoader ]=useState<boolean>(false)
     const [buttonLoader,setButtonLoader]= useState<boolean>(false)
+    const {userToken}=useAuthContext()
     useEffect(() => {
-        fetchProfile();
+        if(userToken){
+        fetchProfile();}
     }, []);
 
 
