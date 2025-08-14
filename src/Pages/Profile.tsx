@@ -17,7 +17,7 @@ export default function Profile() {
     const { data, setData } = useDataContext()
     const fetchdata = async () => {
         try {
-            setLoader
+            setLoader(true)
             const response = await getData({
                 apiurl: `${import.meta.env.VITE_API_URL}api/profile/get/${id}`,
             })
@@ -49,7 +49,12 @@ export default function Profile() {
 
 
             {Loader ? (
-                <p className="flex justify-center items-center"><ClipLoader size={20} color="gray" /></p>
+             <div className="flex justify-center items-center h-screen">
+             <div className="text-center">
+                 <ClipLoader color="#8b5cf6" size={50} />
+                 <p className="text-purple-300 mt-4 text-lg">Loading your profile...</p>
+             </div>
+         </div>
             ) :
                 (<div>
                     {data?.github?.username && data?.username && <Header />}
