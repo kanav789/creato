@@ -7,8 +7,10 @@ import cors from "cors";
 
 const app = express();
 app.use(cors());
-// connect mongoDB
-app.use(express.json());
+
+
+// JSON parser only for routes that need it
+app.use("/api", express.json());
 
 connectDb();
 app.get("/", (req, res) => {
@@ -18,9 +20,10 @@ app.get("/", (req, res) => {
 // import routes
 import authRoutes from "./routes/AuthRoutes.js";
 import profileRoutes from "./routes/ProfileRoutes.js";
-
+import generatedRoutes from "./routes/GeneratedRoute.js";
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/profile", generatedRoutes);
 
 const PORT = process.env.PORT || 4000;
 
