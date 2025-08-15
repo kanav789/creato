@@ -76,6 +76,12 @@ The server will start on `http://localhost:4000` (or your specified PORT).
 | POST   | `/api/profile/delete`  | Delete user profile | Yes            |
 | GET    | `/api/profile/get/:id` | Get profile by ID   | No             |
 
+### Generated Profile Route (`/profile`)
+
+| Method | Endpoint                   | Description                                 | Authentication |
+| ------ | -------------------------- | ------------------------------------------- | -------------- |
+| GET    | `/profile/generate/:id`    | Generate and download static profile as ZIP | Yes            |
+
 ## 📊 Data Models
 
 ### User Model
