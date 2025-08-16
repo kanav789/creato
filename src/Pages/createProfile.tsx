@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { getData, PostData } from "../utility/CustomFetchData/CustomFetchData";
 import { ClipLoader } from "react-spinners";
 import { useAuthContext } from "../Context/AuthContext";
+import axios from "axios";
 
 const initialData = {
     _id: "",
@@ -62,9 +63,13 @@ export default function EditableJson() {
     const [Loader,setLoader ]=useState<boolean>(false)
     const [buttonLoader,setButtonLoader]= useState<boolean>(false)
     const {userToken}=useAuthContext()
+    console.log(userToken, "userToken");
     useEffect(() => {
-        if(userToken){
-        fetchProfile();}
+
+        fetchProfile();
+
+
+
     }, []);
 
 
@@ -131,6 +136,62 @@ export default function EditableJson() {
         }
     };
 
+    const [downloadLoader, setDownloadLoader] = useState<boolean>(false)
+    const GenerateBuild = async () => {
+        setDownloadLoader(true);
+        console.log(data?._id, "data");
+
+        if (!data?._id) {
+            setDownloadLoader(false);
+            console.log("Profile ID is missing");
+            return;
+        }
+
+        try {
+            // Get auth token - adjust based on how you store it
+            const token = userToken || localStorage.getItem('token');
+
+            const response = await axios({
+                method: 'GET',
+                url: `${import.meta.env.VITE_API_URL}profile/generate/${data._id}`,
+                responseType: 'blob',
+                timeout: 60000,
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/zip, application/octet-stream, */*',
+                }
+            });
+
+            console.log(response, "response");
+
+            if (response.data.size === 0) {
+                throw new Error('Empty file received from server');
+            }
+
+            const url = window.URL.createObjectURL(response.data);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `profile-${data._id}.zip`;
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            window.URL.revokeObjectURL(url);
+
+        } catch (error) {
+            console.error("Error generating build:", error);
+
+            let errorMessage = 'Download failed: ';
+
+
+
+            alert(errorMessage);
+        } finally {
+            setDownloadLoader(false);
+        }
+    };
+
 
     return (
         <div className="min-h-screen" style={{ backgroundColor: '#111827' }}>
@@ -190,10 +251,10 @@ export default function EditableJson() {
                                             https://creato-iota.vercel.app/profile/{data._id}
                                         </code>
                                         <button 
-                                            onClick={copyProfileLink}
-                                            className="px-3 py-2 bg-emerald-600/30 border border-emerald-400/50 rounded-lg text-emerald-300 text-sm hover:bg-emerald-600/50 transition-colors"
+                                                onClick={() => GenerateBuild()}
+                                                className="px-3 py-2 bg-emerald-600/30 border border-emerald-400/50 rounded-lg text-emerald-300 text-sm hover:bg-emerald-600/50 transition-colors flex items-center gap-2"
                                         >
-                                            {profilelinktext}
+                                                {downloadLoader && <ClipLoader />}        Generate and Download Build
                                         </button>
                                     </div>
                                 </div>
