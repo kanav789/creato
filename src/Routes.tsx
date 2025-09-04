@@ -8,6 +8,7 @@ import EditableJson from "./Pages/createProfile.tsx";
 import { Protector } from "./Protector.tsx";
 import Home from "./Pages/Home.tsx";
 import Logout from "./components/authComp/Logout.tsx";
+import Testing from "./Pages/Testing.tsx";
 const router = createBrowserRouter([
   {
     path: "/login",
@@ -21,7 +22,9 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: < Home />
-  },
+  }
+
+  ,
   {
     path: "/profile/:id",
     element: <Profile />
